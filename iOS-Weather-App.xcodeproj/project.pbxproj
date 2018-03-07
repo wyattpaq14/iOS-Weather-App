@@ -15,6 +15,19 @@
 		B83F9C762046180B001F1DB4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B83F9C742046180B001F1DB4 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		B8B5F0F5204F5D6A00AA4C19 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		B83F9C662046180B001F1DB4 /* iOS-Weather-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-Weather-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B83F9C692046180B001F1DB4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +90,7 @@
 				B83F9C622046180B001F1DB4 /* Sources */,
 				B83F9C632046180B001F1DB4 /* Frameworks */,
 				B83F9C642046180B001F1DB4 /* Resources */,
+				B8B5F0F5204F5D6A00AA4C19 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

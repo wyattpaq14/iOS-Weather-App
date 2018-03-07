@@ -68,19 +68,94 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
         
         
         
+        var city = [String]()
+        var zip = [String]()
+        var state = [String]()
+        
+        var currentConditions = [String]()
+        var tempature = [String]()
+        var feelsLike = [String]()
+        var humidity = [String]()
+        var windspeed = [String]()
+        var tempature = [String]()
+        var winddir = [String]()
         
         
-//        let url = URL(string: "http://api.geonames.org/findNearbyPostalCodesJSON?lat=\(String(format: "%.4f", latestLocation.coordinate.latitude))&lng=\(String(format: "%.4f", latestLocation.coordinate.longitude))&radius=10&username=wyattpaq14")
-        let url = URL(string: "http://api.geonames.org/findNearbyPostalCodesJSON?lat=47&lng=9&radius=10&username=wyattpaq14")
-        let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
-//            self.lblLocation.text = String(data: data!, encoding: .utf8)
-//            self.lblLocation.text = response?.description
-//            print(String(data: data!, encoding: .utf8))
-            let json = try? JSONSerialization.jsonObject(with: data!, options: [])
-            json[
+        let geonamesURL = URL(string: "http://api.geonames.org/findNearbyPostalCodesJSON?lat=\(String(format: "%.4f", latestLocation.coordinate.latitude))&lng=\(String(format: "%.4f", latestLocation.coordinate.longitude))&radius=10&username=wyattpaq14")
+//        let url = URL(string: "http://api.geonames.org/findNearbyPostalCodesJSON?lat=42.041841&lng=-71.536786&radius=10&username=wyattpaq14")
+        let task1 = URLSession.shared.dataTask(with: geonamesURL!) {(data, response, error) in
+            
+            
+            
+            do {
+                if let data = data,
+                    let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+                    let blogs = json["postalCodes"] as? [[String: Any]] {
+                    for blog in blogs {
+                        if let zipcode = blog["placeName"] as? String {
+                            city.append(zipcode)
+                        }
+                        if let zipcode = blog["postalCode"] as? String {
+                            zip.append(zipcode)
+                        }
+                        if let zipcode = blog["adminName1"] as? String {
+                            state.append(zipcode)
+                        }
+                    }
+                }
+            } catch {
+                print("Error deserializing JSON: \(error)")
+            }
+            
+            print("City", city[0])
+            print("Zipcode :", zip[0])
+            print("State :", state[0])
         }
         
-        task.resume()
+        task1.resume()
+        
+//        now we have zip, lets get weather!
+        
+        
+        
+        
+        
+//        let weatherURL = URL(string: "http://api.geonames.org/findNearbyPostalCodesJSON?lat=\(String(format: "%.4f", latestLocation.coordinate.latitude))&lng=\(String(format: "%.4f", latestLocation.coordinate.longitude))&radius=10&username=wyattpaq14")
+        let weatherURL = URL(string: "http://api.wunderground.com/api/ea3f17e608a0b764/conditions/q/CA/San_Francisco.json")
+        let task2 = URLSession.shared.dataTask(with: weatherURL!) {(data, response, error) in
+            
+            
+            
+            do {
+                if let data = data,
+                    let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+                    let blogs = json["response"] as? [[String: Any]] {
+                    for blog in blogs {
+                        if let zipcode = blog["placeName"] as? String {
+                            city.append(zipcode)
+                        }
+                        if let zipcode = blog["postalCode"] as? String {
+                            zip.append(zipcode)
+                        }
+                    }
+                }
+            } catch {
+                print("Error deserializing JSON: \(error)")
+            }
+            
+            print("City", city[0])
+            print("Zipcode :", zip[0])
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        task2.resume()
         
         
         
@@ -92,6 +167,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
                          didFailWithError error: Error) {
         
     }
+    
 
 
 }
